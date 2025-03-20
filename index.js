@@ -11,7 +11,7 @@ const app = express();
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.get('/user', (req, res) => {
+app.get('/users', (req, res) => {
     db.query('SELECT * FROM user', (err, results) => {
         if (err) {
             res.status(500),send('Internal Server Error');
