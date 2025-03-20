@@ -1,9 +1,9 @@
 openapi: '3.0.3'
 info:
-  title: API Title
+  title: API Users
   version: '1.0'
 servers:
-  - url: https://localhost:3000
+  - url: http://localhost:3000
 
 components:
   schemas:
@@ -26,8 +26,7 @@ components:
 paths:
   /users:
     get:
-      description: 'endpoint untuk mendapatkan semua data user'
-      parameters: []
+      description: 'Endpoint untuk mendapatkan semua data user'
       responses:
         '200':
           description: Berhasil
@@ -42,61 +41,39 @@ paths:
         '403':
           description: Tidak diizinkan
 
+    post:
+      description: 'Endpoint untuk menambahkan pengguna baru'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                age:
+                  type: integer
+      responses:
+        '201':
+          description: Pengguna berhasil ditambahkan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '400':
+          description: Request body tidak lengkap
+        '500':
+          description: Server Gagal
+
   /users/{id}:
     get:
-      description: 'endpoint untuk mendapatkan data user berdasarkan id'
+      description: 'Endpoint untuk mendapatkan data user berdasarkan ID'
       parameters:
         - name: id
           in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-          '200':
-            description: Berhasil
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/user'
-          '500':
-            description: Server Gagal
-          '403':
-            description: Tidak diizinkan
-    delete:
-      description: 'endpoint untuk menghapus data user berdasarkan id'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-          '200':
-            description: Berhasil
-          '500':
-            description: Server Gagal
-          '403':
-            description: Tidak diizinkan
-    put:
-      description: 'endpoint untuk mengubah data user berdasarkan id'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: name
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: email
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: age
-          in: query
           required: true
           schema:
             type: integer
@@ -107,4 +84,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/user'
-        
+        '404':
+          description: Pengguna tidak ditemukan
+        '500':
+          description: Server Gagal
+
+    put:
+      description: 'Endpoint untuk mengubah data user berdasarkan ID'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                age:
+                  type: integer
+      responses:
+        '200':
+          description: Berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '400':
+          description: Request body tidak lengkap
+        '404':
+          description: Pengguna tidak ditemukan
+        '500':
+          description: Server Gagal
+
+    delete:
+      description: 'Endpoint untuk menghapus data user berdasarkan ID'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Pengguna berhasil dihapus
+        '404':
+          description: Pengguna tidak ditemukan
+        '500':
+          description: Server Gagal

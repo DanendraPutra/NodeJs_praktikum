@@ -4,5 +4,17 @@
     "mysql2": "^3.14.0",
     "swagger-ui-express": "^5.0.1",
     "yaml": "^2.7.0"
-  }
+  },
+  "name": "nodejs_praktikum",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
